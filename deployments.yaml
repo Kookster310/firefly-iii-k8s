@@ -37,7 +37,7 @@ spec:
         - name: firefly-iii-data
           persistentVolumeClaim:
             claimName: firefly-iii-data
-        - name: env-volume
+        - name: firefly-iii-env
           secret:
             secretName: firefly-iii-env
           
