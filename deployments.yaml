@@ -31,3 +31,26 @@ spec:
         - name: firefly-iii-data
           persistentVolumeClaim:
             claimName: firefly-iii-data
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: importer
+spec:
+  selector:
+    matchLabels:
+      app: firefly-iii
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: firefly-iii
+    spec:
+      containers:
+        - name: importer
+          image: fireflyiii/data-importer:latest
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - secretRef:
+                name: importer-env
