@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fireflyiii-ingress
+  namespace: fireflyiii-server
+  labels:
+    app: fireflyiii
+spec:
+  tls:
+  - hosts:
+    - fireflyiii.310networks.com
+  rules:
+    - host: fireflyiii.310networks.com
+      http:
+        paths:
+          - pathType: ImplementationSpecific
+            backend:
+              service:
+                name: fireflyiii
+                port:
+                  name: http

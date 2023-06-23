@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fireflyiii
+  namespace: fireflyiii-server
+  labels:
+    app: fireflyiii
+spec:
+  strategy:
+    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fireflyiii
+  template:
+    metadata:
+      labels:
+        app: fireflyiii
+    spec:
+      containers:
+        - name: fireflyiii
+          image: fireflyiii/core:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8080
+          volumeMounts:
+            - mountPath: /var/www/html/storage/upload
+              name: fireflyiii-data
+      volumes:
+        - name: fireflyiii-data
+          persistentVolumeClaim:
+            claimName: fireflyiii-data

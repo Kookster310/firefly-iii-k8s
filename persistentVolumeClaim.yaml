@@ -1,0 +1,14 @@
+apiVersion: apps/v1
+kind: PersistentVolumeClaim
+metadata:
+  name: fireflyiii-data
+  namespace: fireflyiii
+  labels:
+    app: fireflyiii
+apiVersion: v1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
