@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: firefly-iii
-          image: firefly-iii/core:latest
+          image: fireflyiii/core:latest
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
