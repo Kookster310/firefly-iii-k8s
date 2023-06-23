@@ -36,6 +36,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: importer
+  namespace: firefly-iii-ns
 spec:
   selector:
     matchLabels:
