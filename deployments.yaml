@@ -27,6 +27,9 @@ spec:
           volumeMounts:
             - mountPath: /var/www/html/storage/upload
               name: firefly-iii-data
+          envFrom:
+            - secretRef:
+                name: firefly-iii-env
       volumes:
         - name: firefly-iii-data
           persistentVolumeClaim:
