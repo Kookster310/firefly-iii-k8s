@@ -25,8 +25,11 @@ spec:
             - name: http
               containerPort: 8080
           volumeMounts:
-            - mountPath: /var/www/html/storage/upload
-              name: firefly-iii-data
+            - name: firefly-iii-data
+              mountPath: /var/www/html/storage/upload
+            - name: firefly-iii-env
+              mountPath: /var/www/html/.env
+              subPath: .env
           envFrom:
             - secretRef:
                 name: firefly-iii-env
@@ -34,6 +37,10 @@ spec:
         - name: firefly-iii-data
           persistentVolumeClaim:
             claimName: firefly-iii-data
+        - name: env-volume
+          secret:
+            secretName: firefly-iii-env
+          
 ---
 apiVersion: apps/v1
 kind: Deployment
