@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app
+  namespace: firefly-iii-ns
+spec:
+  selector:
+    app: firefly-iii
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: NodePort
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  namespace: firefly-iii-ns
+spec:
+  selector:
+    app: firefly-iii
+  ports:
+    - protocol: TCP
+      port: 3306
+  type: ClusterIP

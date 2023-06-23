@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: db
+  namespace: firefly-iii-ns
+spec:
+  serviceName: db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: firefly-iii
+      component: db
+  template:
+    metadata:
+      labels:
+        app: firefly-iii
+        component: db
+    spec:
+      containers:
+        - name: db
+          image: mariadb
+          envFrom:
+            - secretRef:
+                name: db-env
+          volumeMounts:
+            - name: firefly-iii-db
+              mountPath: /var/lib/mysql
+          ports:
+            - containerPort: 3306
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+      volumes:
+        - name: firefly-iii-db
+          emptyDir: {}
