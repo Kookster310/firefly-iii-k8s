@@ -7,3 +7,4 @@ Update tokens and passwords:
 Secrets.yaml:
     MAIL_PASSWORD
     APP_KEY
+    DB_PASSWORD <-> MYSQL_PASSWORD
