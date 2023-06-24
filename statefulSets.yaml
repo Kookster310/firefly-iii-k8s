@@ -17,20 +17,20 @@ spec:
         component: db
     spec:
       containers:
-        - name: db
-          image: mysql
-          envFrom:
-            - secretRef:
-                name: db-env
-          volumeMounts:
-            - name: firefly-iii-db
-              mountPath: /var/lib/mysql
-          ports:
-            - containerPort: 3306
-          resources:
-            requests:
-              cpu: 100m
-              memory: 256Mi
-      volumes:
+      - name: db
+        image: mysql
+        envFrom:
+        - secretRef:
+            name: db-env
+        volumeMounts:
         - name: firefly-iii-db
-          emptyDir: {}
+          mountPath: /var/lib/mysql
+        ports:
+        - containerPort: 3306
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+      volumes:
+      - name: firefly-iii-db
+        emptyDir: {}
