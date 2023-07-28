@@ -1,18 +1,41 @@
 # firefly-iii-k8s
 #Kubernetes deployment of Firefly III Personal Finance Application
 
-###Create namespace: firefly-iii-ns
 
-###secrets.yaml file to configure application
+###See: https://github.com/firefly-iii/kubernetes/tree/main/charts
+tldr: 
+```helm repo add firefly-iii https://firefly-iii.github.io/kubernetes
+helm repo update
+helm install firefly-iii firefly-iii/firefly-iii-stack```
 
-###Required updates:
 
-| Location | Parameter | Example Value | Notes |
-| ------ | ------ | ------ | ------ |
-| secrets.yaml/firefly-iii-env | APP_KEY  | 57g43itrdz8orzw57mfky3tn3d5x3wri | 32 character long string |
-| secrets.yaml/firefly-iii-env | DB_PASSWORD | kd4XUMPFebcehrBjLkKH | mysql password for firefly user |
-| secrets.yaml/firefly-iii-env | MAIL_PASSWORD | 9NLMpuKWM7BCvbfcGPB5 | SMTP password |
-| secrets.yaml/firefly-iii-env | STATIC_CRON_TOKEN | X5e7caQUuGQBRtjn9UoqZx3SnaUJj39g | must be *exactly* 32 characters long |
-| secrets.yaml/db-env | MYSQL_PASSWORD | kd4XUMPFebcehrBjLkKH | mysql paassword for firefly user, must match DB_PASSWORD |
-| secrets.yaml/importer-env | MAIL_PASSWORD | 9NLMpuKWM7BCvbfcGPB5 | SMTP password |
-| cronjob.yaml | command | X5e7caQUuGQBRtjn9UoqZx3SnaUJj39g | update the REPLACEME string with the token created for STATIC_CRON_TOKEN |
+###Suggested values.yaml on helm install:
+```
+firefly-db:
+  storage:
+    class: local-path
+    dataSize: 10Gi
+  configs:
+    TZ: Pacific/Honolulu
+  backup:
+    pvc:
+      class: local-path
+      dataSize: 10Gi
+
+firefly-iii:
+  persistence:
+    storageClassName: local-path
+    storage: 10Gi
+  cronjob:
+    enabled: true
+    auth:
+      token: X5e7caQUuGQBRtjn9UoqZx3SnaUJj39g
+
+importer:
+  fireflyiii:
+    url: "https://firefly.310networks.com"
+    auth:
+      accessToken: X5e7caQUuGQBRtjn9UoqZx3SnaUJj39g
+  config:
+    env:
+      TZ: Pacific/Honolulu
